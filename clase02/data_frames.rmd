@@ -1,0 +1,109 @@
+---
+title: "Guía de DataFrames en R"
+author: "Larios Ponce Hector Manuel"
+date: "22-07-2024"
+output: pdf_document
+---
+# Guía de DataFrames en R
+
+  En R, los DataFrames son estructuras de datos fundamentales que permiten organizar y manipular datos de manera tabular. Este documento proporciona una introducción básica sobre cómo trabajar con DataFrames en R.
+
+## Creación de DataFrames
+
+- **Crear un DataFrame desde cero**:
+
+  Para crear un DataFrame nuevo desde cero, puedes usar la función `data.frame()` proporcionando vectores para cada columna:
+
+  ```{r}
+  #Ejemplo: Crear un DataFrame de estudiantes # nolint: indentation_linter.
+  estudiantes <- data.frame(
+    nombre = c("Juan", "María", "Pedro"),
+    edad = c(22, 24, 21),
+    promedio = c(8.5, 7.9, 9.2)
+  )
+
+  # Mostrar el DataFrame creado # nolint: indentation_linter.
+  estudiantes
+  ```
+## Operaciones básicas con DataFrames
+
+### Visualización y exploración de DataFrames
+
+- **Visualizar las primeras filas del DataFrame:**
+
+  Utiliza `head()` para ver las primeras filas o `tail()` para ver las últimas.
+  
+  ```{r}
+  head(estudiantes) # Muestra las primeras 6 filas por defecto
+  tail(estudiantes, 1) # Muestra las últimas 6 filas por defecto
+  ```
+
+- **Obtener dimensiones del DataFrame:** 
+
+  Utiliza `dim()` para obtener el número de filas y columnas.
+  
+  ```{r}
+  dim(estudiantes) # Muestra el número de filas y columnas
+  ```
+
+- **Nombres de las columnas:** 
+
+  Utiliza `names()` para obtener los nombres de las columnas.
+  ```{r}
+  names(estudiantes) # Muestra los nombres de las columnas
+  ```
+### Manipulacion de DataFrame
+- **Acceso a elementos:** 
+  
+  Puedes acceder a elementos específicos del DataFrame utilizando corchetes `[filas, columnas]` o el nombre de la columna.
+  
+  ```{r}
+  # Acceder a la edad de María
+  estudiantes[2, "edad"] # Accede a la fila 2, columna "edad"
+  ```
+- **Filtrar filas:**
+  
+  Puedes filtrar filas basadas en condiciones lógicas específicas.
+  
+  ```{r}
+  # Filtrar estudiantes con promedio mayor a 8.0
+  estudiantes[estudiantes$promedio > 8.0, ]
+  ```
+- **Agregar nuevas columnas:** 
+
+  Puedes agregar nuevas columnas al DataFrame, e incluso asignar valores calculados.
+  
+  ```{r}
+  # Agregar columna estado (aprobado/reprobado/aprobado)
+  estudiantes$status <- ifelse(estudiantes$promedio >= 8.0, "ap", "rp")
+  estudiantes
+  ```
+
+## Analisis exploratorio de DataFrame
+  
+  **Resumen estadístico**
+  
+  Utiliza `summary()` para obtener un resumen estadístico de las columnas numéricas.
+  
+  ```{r}
+  summary(estudiantes)
+  ```
+
+  **Gráficos** 
+
+  Puedes crear gráficos para visualizar los datos en el DataFrame.
+
+  - **Gráfico de dispersión**: Usa plot() para crear gráficos simples.
+    
+    ```{r}
+    plot(estudiantes$edad, estudiantes$promedio, xlab = "Edad", ylab = "Promedio")
+    ```
+  - **Gráfico de barras**: Usa barplot() para crear gráficos de barras.
+    
+    ```{r}
+    barplot(
+            estudiantes$promedio,
+            names.arg = estudiantes$nombre,
+            xlab = "Estudiantes",
+            ylab = "Promedio")
+    ```
